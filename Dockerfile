@@ -12,6 +12,7 @@ RUN npm ci
 # Copy frontend source
 COPY Frontend/src ./src
 COPY Frontend/public ./public
+COPY Frontend/Images ./Images
 COPY Frontend/*.html ./
 COPY Frontend/*.config.js ./
 COPY Frontend/tsconfig*.json ./
