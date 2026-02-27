@@ -1,18 +1,18 @@
-import express, { Express, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import express, { Express, NextFunction, Request, Response } from 'express';
 import path from 'path';
 
 // Routes
-import authRoutes from './routes/authRoutes';
-import memberRoutes from './routes/memberRoutes';
-import applicationRoutes from './routes/applicationRoutes';
 import accountsRoutes from './routes/accountsRoutes';
-import eventsRoutes from './routes/eventsRoutes';
-import jobsRoutes from './routes/jobsRoutes';
 import adminRoutes from './routes/adminRoutes';
-import publicRoutes from './routes/publicRoutes';
+import applicationRoutes from './routes/applicationRoutes';
+import authRoutes from './routes/authRoutes';
+import eventsRoutes from './routes/eventsRoutes';
 import idCardRoutes from './routes/idCardRoutes';
+import jobsRoutes from './routes/jobsRoutes';
+import memberRoutes from './routes/memberRoutes';
+import publicRoutes from './routes/publicRoutes';
 
 dotenv.config();
 
@@ -74,7 +74,12 @@ app.get('/api', (req: Request, res: Response) => {
       jobs: '/api/jobs',
       admin: '/api/admin',
       public: '/api/public',
-   SPA Fallback: Serve React app for all non-API routes
+      idCard: '/api/id-card',
+    },
+  });
+});
+
+// SPA Fallback: Serve React app for all non-API routes
 app.get('*', (req: Request, res: Response) => {
   // Don't fall back for API routes
   if (req.path.startsWith('/api/')) {
@@ -85,12 +90,7 @@ app.get('*', (req: Request, res: Response) => {
     });
   }
   // Serve index.html for React Router
-  res.sendFile(path.join(__dirname, '../public/index.html').use((req: Request, res: Response) => {
-  res.status(404).json({
-    success: false,
-    message: 'Route not found',
-    path: req.path,
-  });
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 // Error handler

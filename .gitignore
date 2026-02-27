@@ -1,4 +1,6 @@
+# ==========================================
 # Logs
+# ==========================================
 logs
 *.log
 npm-debug.log*
@@ -7,36 +9,108 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# ==========================================
 # Dependencies
+# ==========================================
 node_modules/
 Frontend/node_modules/
 Backend/node_modules/
+yarn.lock
+package-lock.json
 
+# ==========================================
 # Build outputs
+# ==========================================
 dist/
 dist-ssr/
 Frontend/dist/
 Backend/dist/
+build/
+.next/
+out/
 
-# Vite cache
+# ==========================================
+# Development cache
+# ==========================================
 .vite/
 Frontend/.vite/
+.turbo/
 
-# Local files
-*.local
-
-# Environment variables
+# ==========================================
+# Environment variables (NEVER commit these!)
+# ==========================================
 .env
 .env.local
+.env.production
+.env.development
+.env.test
 Backend/.env
+Backend/.env.local
+Backend/.env.production
+Frontend/.env
+Frontend/.env.local
+Frontend/.env.production
 
-# Editor directories and files
+# ==========================================
+# IDE & Editor files
+# ==========================================
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
+*.sublime-project
+*.sublime-workspace
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
+.AppleDouble
+.LSOverride
 *.sw?
+*.swp
+*.swo
+*~
+.project
+.classpath
+.jshintrc
+
+# ==========================================
+# Testing
+# ==========================================
+coverage/
+.nyc_output/
+*.lcov
+.jest/
+junit.xml
+
+# ==========================================
+# OS specific
+# ==========================================
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+
+# ==========================================
+# Development scripts and documentation
+# ==========================================
+test-*.sql
+test-*.ps1
+test-*.sh
+diagnostic-query.sql
+check-all-data.sql
+DEBUGGING_NOTIFICATIONS.md
+
+# ==========================================
+# Runtime files
+# ==========================================
+*.pid
+*.seed
+*.pid.lock
+
+# ==========================================
+# Optional npm cache directory
+# ==========================================
+.npm
+.eslintcache
+
+# ==========================================
+# Optional REPL history
+# ==========================================
+.node_repl_history
