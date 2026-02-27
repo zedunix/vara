@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900;1000&family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ========================================================= */
+      /*  VARA UAE — A6 ID CARD MASTER TEMPLATE                    */
+      /*  Size: 105mm × 148mm  |  Print-ready 300 DPI              */
+      /*  All layout values in millimetres                         */
+      /* ========================================================= */
+
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      @page {
+        size: 105mm 148mm;
+        margin: 0;
+      }
+
+      html {
+        width: 105mm;
+        height: 148mm;
+      }
+
+      body {
+        width: 105mm;
+        height: 148mm;
+        overflow: hidden;
+        font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        color-adjust: exact;
+      }
+
+      /* ── CARD ROOT ─────────────────────────────────────────── */
+      .card {
+        position: relative;
+        width: 105mm;
+        height: 148mm;
+        background-color: #0033ff;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ── BACKGROUND DOTS GRID (left-side, behind photo) ─────── */
+      .dots-bg {
+        position: absolute;
+        top: 64mm;
+        left: 0;
+        width: 52mm;
+        height: 55mm;
+        pointer-events: none;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: repeat(5, 8mm);
+        grid-template-rows: repeat(5, 8mm);
+        gap: 2.5mm;
+        padding-left: 2mm;
+        padding-top: 2mm;
+      }
+
+      .dot {
+        width: 7mm;
+        height: 7mm;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.10);
+      }
+
+      .dot.blue {
+        background-color: rgba(100, 160, 255, 0.18);
+      }
+
+      /* ── TOP HEADER ─────────────────────────────────────────── */
+      .header {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 5mm 5mm 0 5.5mm;
+      }
+
+      .header-title {
+        font-size: 3mm;
+        font-weight: 700;
+        color: #5b9fff;
+        letter-spacing: 0.15mm;
+        line-height: 1.45;
+        text-transform: uppercase;
+      }
+
+      .vara-logo {
+        width: 20mm;
+        height: 20mm;
+        object-fit: contain;
+        flex-shrink: 0;
+      }
+
+      /* ── MAIN HEADLINE ───────────────────────────────────────── */
+      .headline {
+        position: relative;
+        z-index: 10;
+        padding: 3mm 5.5mm 0 5.5mm;
+      }
+
+      .big-text {
+        font-family: 'Nunito', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 11.5mm;
+        font-weight: 900;
+        line-height: 0.92;
+        letter-spacing: -0.2mm;
+        display: block;
+        color: transparent;
+        -webkit-text-stroke: 2px #ffd700;
+        text-stroke: 2px #ffd700;
+        paint-order: stroke fill;
+      }
+
+      .big-text.filled {
+        color: #ffd700;
+        -webkit-text-stroke: 0;
+        text-stroke: 0;
+      }
+
+      .varafied-row {
+        display: flex;
+        align-items: center;
+        gap: 1.5mm;
+        line-height: 0.92;
+      }
+
+      .varafied-word {
+        font-family: 'Nunito', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 11.5mm;
+        font-weight: 900;
+        color: #ffd700;
+        letter-spacing: -0.2mm;
+        line-height: 0.92;
+      }
+
+      .varafied-badge {
+        width: 8mm;
+        height: 8mm;
+        object-fit: contain;
+        margin-bottom: -1mm;
+        filter: drop-shadow(0 1px 4px rgba(255, 215, 0, 0.35));
+      }
+
+      .headline-a {
+        font-family: 'Nunito', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 11.5mm;
+        font-weight: 900;
+        color: transparent;
+        -webkit-text-stroke: 2px #ffd700;
+        text-stroke: 2px #ffd700;
+        paint-order: stroke fill;
+        letter-spacing: -0.2mm;
+        line-height: 0.92;
+        margin-right: 1.5mm;
+      }
+
+      .subtitle {
+        font-size: 2.8mm;
+        color: rgba(255, 255, 255, 0.92);
+        line-height: 1.5;
+        margin-top: 2.5mm;
+        font-weight: 400;
+        max-width: 58mm;
+      }
+
+      /* ── CONTENT ROW (Photo left | Dates right) ─────────────── */
+      .content-row {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex: 1;
+        padding: 3mm 4mm 0 5.5mm;
+        gap: 4mm;
+        overflow: hidden;
+      }
+
+      /* LEFT: Photo + Identity */
+      .identity-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 42mm;
+        flex-shrink: 0;
+      }
+
+      .photo-wrapper {
+        position: relative;
+        width: 30mm;
+        height: 30mm;
+        flex-shrink: 0;
+      }
+
+      /* Yellow blob background behind photo */
+      .photo-blob {
+        position: absolute;
+        top: -3mm;
+        left: -3mm;
+        width: 34mm;
+        height: 34mm;
+        background: #ffd700;
+        border-radius: 45% 55% 60% 40% / 50% 45% 55% 50%;
+        z-index: 1;
+      }
+
+      .photo-circle {
+        position: relative;
+        z-index: 2;
+        width: 30mm;
+        height: 30mm;
+        border-radius: 50%;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+      }
+
+      .photo-circle img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+      }
+
+      .photo-placeholder {
+        width: 14mm;
+        height: 14mm;
+        opacity: 0.5;
+      }
+
+      .member-name {
+        margin-top: 3mm;
+        font-size: 3.8mm;
+        font-weight: 800;
+        color: #ffffff;
+        text-align: center;
+        letter-spacing: 0.1mm;
+        line-height: 1.2;
+        text-transform: uppercase;
+        width: 42mm;
+        word-break: break-word;
+      }
+
+      .member-role {
+        margin-top: 1mm;
+        font-size: 2.5mm;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.85);
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 0.05mm;
+        line-height: 1.3;
+        width: 42mm;
+        word-break: break-word;
+      }
+
+      .member-id-label {
+        margin-top: 2.5mm;
+        font-size: 2.3mm;
+        font-weight: 500;
+        color: #5b9fff;
+        text-align: center;
+        letter-spacing: 0.2mm;
+        text-transform: uppercase;
+      }
+
+      .member-id-value {
+        font-size: 2.6mm;
+        font-weight: 700;
+        color: #ffd700;
+        text-align: center;
+        letter-spacing: 0.3mm;
+        margin-top: 0.5mm;
+        word-break: break-all;
+        width: 42mm;
+      }
+
+      /* RIGHT: Date Grid */
+      .dates-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        border: 0.4mm solid rgba(255, 255, 255, 0.25);
+        border-radius: 2mm;
+        overflow: hidden;
+      }
+
+      .date-block {
+        padding: 2mm 2.5mm;
+        border-bottom: 0.4mm solid rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
+
+      .date-block:last-child {
+        border-bottom: none;
+      }
+
+      .date-label-col {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .date-label {
+        font-size: 2.8mm;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: 0.15mm;
+        line-height: 1.3;
+        text-transform: uppercase;
+      }
+
+      .date-label.small {
+        font-size: 2.3mm;
+        font-weight: 600;
+        color: #5b9fff;
+        margin-top: 1mm;
+      }
+
+      .date-big-number {
+        font-size: 13mm;
+        font-weight: 900;
+        color: transparent;
+        -webkit-text-stroke: 1.3px #ffd700;
+        text-stroke: 1.3px #ffd700;
+        line-height: 1;
+        letter-spacing: -0.5mm;
+        align-self: center;
+        min-width: 14mm;
+        text-align: right;
+      }
+
+      /* Icons row (middle) */
+      .icons-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4mm;
+        padding: 2.5mm 2.5mm;
+        border-bottom: 0.4mm solid rgba(255, 255, 255, 0.2);
+      }
+
+      .icon-circle {
+        width: 8mm;
+        height: 8mm;
+        border-radius: 50%;
+        border: 1.2px solid #ffd700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .icon-blob-outline {
+        width: 8mm;
+        height: 8mm;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* ── FOOTER ─────────────────────────────────────────────── */
+      .footer {
+        position: relative;
+        z-index: 10;
+        padding: 2.5mm 5.5mm 3.5mm 5.5mm;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+
+      .footer-left {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .footer-more-info {
+        font-size: 2.5mm;
+        font-weight: 600;
+        color: #ffd700;
+        line-height: 1.2;
+      }
+
+      .footer-website {
+        font-size: 2.8mm;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 1.2;
+        margin-top: 0.5mm;
+        display: flex;
+        align-items: center;
+        gap: 1.5mm;
+      }
+
+      .footer-qr {
+        width: 12mm;
+        height: 12mm;
+        background: rgba(255, 255, 255, 0.1);
+        border: 0.3mm solid rgba(255, 255, 255, 0.3);
+        border-radius: 1mm;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .footer-social {
+        font-size: 2.2mm;
+        font-weight: 600;
+        color: #5b9fff;
+        text-align: right;
+        line-height: 1.5;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+
+      .social-icons-row {
+        display: flex;
+        align-items: center;
+        gap: 2mm;
+        margin-bottom: 1mm;
+      }
+
+      .social-icon {
+        width: 3.5mm;
+        height: 3.5mm;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .social-handle {
+        font-size: 2.3mm;
+        font-weight: 600;
+        color: #5b9fff;
+      }
+
+      /* ── PRINT SAFETY STRIP (white bleed line) ───────────────── */
+      .safe-zone {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+
+      <!-- ══════════════════════════════════════════════════════ -->
+      <!--  BACKGROUND DOTS                                      -->
+      <!-- ══════════════════════════════════════════════════════ -->
+      <div class="dots-bg" aria-hidden="true">
+        <!-- Row 1 -->
+        <div class="dot blue"></div><div class="dot blue"></div><div class="dot blue"></div><div class="dot"></div><div class="dot"></div>
+        <!-- Row 2 -->
+        <div class="dot blue"></div><div class="dot blue"></div><div class="dot blue"></div><div class="dot"></div><div class="dot"></div>
+        <!-- Row 3 -->
+        <div class="dot blue"></div><div class="dot blue"></div><div class="dot blue"></div><div class="dot"></div><div class="dot"></div>
+        <!-- Row 4 -->
+        <div class="dot"></div><div class="dot"></div><div class="dot blue"></div><div class="dot"></div><div class="dot"></div>
+        <!-- Row 5 -->
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════ -->
+      <!--  HEADER                                               -->
+      <!-- ══════════════════════════════════════════════════════ -->
+      <div class="header">
+        <div class="header-title">
+          THE CREATIVE<br />
+          MALAYALI<br />
+          DESIGNERS<br />
+          OF UAE
+        </div>
+        <img
+          src="{{VARA_LOGO_B64}}"
+          alt="VARA UAE"
+          class="vara-logo"
+        />
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════ -->
+      <!--  MAIN HEADLINE                                        -->
+      <!-- ══════════════════════════════════════════════════════ -->
+      <div class="headline">
+        <span class="big-text">Be</span>
+        <div class="varafied-row">
+          <span class="headline-a">a</span>
+          <span class="varafied-word">varafied</span>
+          <img
+            src="{{VARAFIED_BADGE_B64}}"
+            alt="Varafied"
+            class="varafied-badge"
+          />
+        </div>
+        <span class="big-text">member</span>
+        <p class="subtitle">
+          Official inauguration of verified<br />
+          Membership Registration
+        </p>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════ -->
+      <!--  CONTENT ROW                                          -->
+      <!-- ══════════════════════════════════════════════════════ -->
+      <div class="content-row">
+
+        <!-- LEFT: Identity -->
+        <div class="identity-col">
+          <div class="photo-wrapper">
+            <div class="photo-blob"></div>
+            <div class="photo-circle">
+              {{PHOTO_HTML}}
+            </div>
+          </div>
+
+          <div class="member-name">{{FULL_NAME}}</div>
+          <div class="member-role">{{DESIGNATION}}</div>
+          <div class="member-id-label">Member ID</div>
+          <div class="member-id-value">{{MEMBER_ID}}</div>
+        </div>
+
+        <!-- RIGHT: Dates Grid -->
+        <div class="dates-col">
+
+          <!-- STARTS ON -->
+          <div class="date-block">
+            <div class="date-label-col">
+              <span class="date-label">STARTS</span>
+              <span class="date-label">ON</span>
+              <span class="date-label small">{{START_MONTH}}</span>
+              <span class="date-label small">{{START_YEAR}}</span>
+            </div>
+            <div class="date-big-number">{{START_DAY}}</div>
+          </div>
+
+          <!-- ICONS ROW -->
+          <div class="icons-row">
+            <!-- Person icon -->
+            <div class="icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2"
+                   style="width:4mm;height:4mm;">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+            </div>
+            <!-- Varafied blob icon -->
+            <div class="icon-blob-outline">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="1.8"
+                   style="width:8mm;height:8mm;">
+                <path d="M12 2c1.2 0 2.3.5 3.1 1.3.8.8 1.9 1.2 3 1.1 1.2-.1 2.3.5 2.9 1.5.6 1 .6 2.2.1 3.2-.5 1-.5 2.2 0 3.2.5 1 .5 2.2-.1 3.2-.6 1-1.7 1.6-2.9 1.5-1.1-.1-2.2.3-3 1.1-.8.8-1.9 1.3-3.1 1.3s-2.3-.5-3.1-1.3c-.8-.8-1.9-1.2-3-1.1-1.2.1-2.3-.5-2.9-1.5-.6-1-.6-2.2-.1-3.2.5-1 .5-2.2 0-3.2-.5-1-.5-2.2.1-3.2.6-1 1.7-1.6 2.9-1.5 1.1.1 2.2-.3 3-1.1C9.7 2.5 10.8 2 12 2z"/>
+                <polyline points="9 12 11 14 15 10" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- ENDS ON -->
+          <div class="date-block" style="flex:1;">
+            <div class="date-label-col">
+              <span class="date-label">ENDS</span>
+              <span class="date-label">ON</span>
+              <span class="date-label small">{{END_MONTH}}</span>
+              <span class="date-label small">{{END_YEAR}}</span>
+            </div>
+            <div class="date-big-number">{{END_DAY}}</div>
+          </div>
+
+        </div>
+        <!-- / dates-col -->
+
+      </div>
+      <!-- / content-row -->
+
+      <!-- ══════════════════════════════════════════════════════ -->
+      <!--  FOOTER                                               -->
+      <!-- ══════════════════════════════════════════════════════ -->
+      <div class="footer">
+
+        <div class="footer-left">
+          <span class="footer-more-info">For more info</span>
+          <span class="footer-website">
+            <!-- Pixel-dot icon reproduced as SVG grid -->
+            <svg viewBox="0 0 12 12" fill="#FFD700" style="width:3.5mm;height:3.5mm;"
+                 aria-hidden="true">
+              <rect x="0" y="0" width="3" height="3" rx="0.5"/>
+              <rect x="4.5" y="0" width="3" height="3" rx="0.5"/>
+              <rect x="9" y="0" width="3" height="3" rx="0.5"/>
+              <rect x="0" y="4.5" width="3" height="3" rx="0.5"/>
+              <rect x="9" y="4.5" width="3" height="3" rx="0.5"/>
+              <rect x="0" y="9" width="3" height="3" rx="0.5"/>
+              <rect x="4.5" y="9" width="3" height="3" rx="0.5"/>
+              <rect x="9" y="9" width="3" height="3" rx="0.5"/>
+            </svg>
+            {{WEBSITE_URL}}
+          </span>
+        </div>
+
+        <div class="footer-social">
+          <div class="social-icons-row">
+            <!-- Facebook -->
+            <svg viewBox="0 0 24 24" fill="#5b9fff" style="width:3mm;height:3mm;">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+            <!-- Instagram -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="#5b9fff" stroke-width="2"
+                 style="width:3mm;height:3mm;">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.8" fill="#5b9fff"/>
+            </svg>
+            <!-- TikTok d -->
+            <svg viewBox="0 0 24 24" fill="#5b9fff" style="width:3mm;height:3mm;">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.36 6.36 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.79 1.53V6.77a4.86 4.86 0 0 1-1.02-.08z"/>
+            </svg>
+            <!-- YouTube -->
+            <svg viewBox="0 0 24 24" fill="#5b9fff" style="width:3mm;height:3mm;">
+              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.41 19.1C5.12 19.56 12 19.56 12 19.56s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.97 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.38z"/>
+              <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#0033ff"/>
+            </svg>
+          </div>
+          <div class="social-handle">@varauae</div>
+        </div>
+
+      </div>
+      <!-- / footer -->
+
+    </div>
+    <!-- / card -->
+  </body>
+</html>
