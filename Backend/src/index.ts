@@ -1,6 +1,7 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 
 // Routes
 import authRoutes from './routes/authRoutes';
@@ -20,11 +21,16 @@ const PORT = process.env.PORT || 5003;
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.FRONTEND_URL 
+    : ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'],
   credentials: true,
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from the public directory (built React app)
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Request logging (development)
 if (process.env.NODE_ENV === 'development') {
@@ -68,13 +74,18 @@ app.get('/api', (req: Request, res: Response) => {
       jobs: '/api/jobs',
       admin: '/api/admin',
       public: '/api/public',
-      idCard: '/api/id-card',
-    },
-  });
-});
-
-// 404 handler
-app.use((req: Request, res: Response) => {
+   SPA Fallback: Serve React app for all non-API routes
+app.get('*', (req: Request, res: Response) => {
+  // Don't fall back for API routes
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({
+      success: false,
+      message: 'Route not found',
+      path: req.path,
+    });
+  }
+  // Serve index.html for React Router
+  res.sendFile(path.join(__dirname, '../public/index.html').use((req: Request, res: Response) => {
   res.status(404).json({
     success: false,
     message: 'Route not found',
