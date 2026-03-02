@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
-import { authAPI, adminAPI, membersAPI, applicationsAPI } from '../utils/api';
+import { authAPI, adminAPI, membersAPI, applicationsAPI, API_URL } from '../utils/api';
 import { toast } from 'sonner';
 import * as XLSX from 'xlsx';
 import {
@@ -1516,7 +1516,7 @@ export default function AdminDashboard() {
           bannerFormData.append('eventBanner', eventBannerFile);
 
           const token = localStorage.getItem('token');
-          const bannerResponse = await fetch(`http://localhost:5003/api/admin/events/${eventId}/banner`, {
+          const bannerResponse = await fetch(`${API_URL}/admin/events/${eventId}/banner`, {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${token}`,

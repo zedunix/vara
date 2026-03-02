@@ -4,7 +4,7 @@ import { useAuthStore } from '@/store/authStore';
 import { downloadIdCardPdf } from './IdCardDownload';
 import { toast } from 'sonner';
 
-const API_BASE = (import.meta.env.VITE_API_URL || 'http://localhost:5003/api').replace(/\/+$/, '');
+const API_BASE = (import.meta.env.VITE_API_URL || '/api').replace(/\/+$/, '');
 
 const VarafiedIdCard: React.FC = () => {
   const { user, updateUser } = useAuthStore();
@@ -366,7 +366,7 @@ const _DeprecatedVarafiedIdCard: React.FC = () => {
       }
 
       // Upload to backend
-      const response = await fetch('http://localhost:5003/api/members/me/profile-photo', {
+      const response = await fetch(`${API_BASE}/members/me/profile-photo`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

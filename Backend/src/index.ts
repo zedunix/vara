@@ -18,12 +18,39 @@ dotenv.config();
 
 const app: Express = express();
 const PORT = process.env.PORT || 5003;
+const allowedOrigins = (process.env.FRONTEND_URL || '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 // Middleware
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? process.env.FRONTEND_URL 
-    : ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'],
+  origin: (origin, callback) => {
+    // Allow non-browser requests (health checks, server-to-server)
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    // Development defaults
+    if (process.env.NODE_ENV !== 'production') {
+      const devOrigins = ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'];
+      if (devOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+    }
+
+    // Fallback: allow when no explicit frontend origin is configured
+    if (allowedOrigins.length === 0) {
+      return callback(null, true);
+    }
+
+    // Production configured origins
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
 }));
 app.use(express.json());

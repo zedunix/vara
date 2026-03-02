@@ -36,8 +36,8 @@ export const downloadIdCardPdf = async ({
     const token = localStorage.getItem('token');
     if (!token) throw new Error('No authentication token found. Please log in again.');
 
-    // VITE_API_URL already includes /api (e.g. http://localhost:5003/api)
-    const apiBase = (import.meta.env.VITE_API_URL || 'http://localhost:5003/api').replace(/\/+$/, '');
+    // VITE_API_URL should include /api in custom setups
+    const apiBase = (import.meta.env.VITE_API_URL || '/api').replace(/\/+$/, '');
     const response = await fetch(`${apiBase}/id-card/download/${encodeURIComponent(memberId)}`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${token}` },
