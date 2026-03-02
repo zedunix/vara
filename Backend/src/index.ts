@@ -44,6 +44,21 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/public', publicRoutes);
 app.use('/api/id-card', idCardRoutes);
 
+// Root route for deployment checks / direct browser access
+app.get('/', (req: Request, res: Response) => {
+  res.json({
+    status: 'ok',
+    message: 'VARA Backend API is running',
+    health: '/health',
+    api: '/api',
+  });
+});
+
+// Prevent noisy 404s from automatic browser favicon requests
+app.get('/favicon.ico', (req: Request, res: Response) => {
+  res.status(204).end();
+});
+
 // Health check
 app.get('/health', (req: Request, res: Response) => {
   res.json({ 
