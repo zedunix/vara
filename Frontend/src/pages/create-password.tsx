@@ -59,7 +59,7 @@ export default function CreatePassword() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <img 
-            src="/Images/image.png" 
+            src="/Images/banner.jpg" 
             alt="Background" 
             className="w-full h-full object-cover opacity-60"
           />
