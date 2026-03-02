@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { User as UserIcon } from 'lucide-react';
-import varafiedBadge from '../../../Images/Varafied Icon@4x.png';
+import varafiedBadge from '/Images/vara-logo.png';
 
 interface IdCardPreviewProps {
   userData: {
