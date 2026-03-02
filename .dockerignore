@@ -1,0 +1,16 @@
+.git
+.gitignore
+**/node_modules
+**/dist
+**/.env
+**/.env.*
+Frontend
+Backend/node_modules
+Backend/dist
+Backend/*.sql
+Backend/*.ps1
+Backend/*.sh
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
