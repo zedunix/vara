@@ -1,0 +1,15 @@
+{
+  "name": "vara-main",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npm run dev:frontend",
+    "dev:frontend": "npm --prefix Frontend run dev",
+    "dev:backend": "npm --prefix Backend run dev",
+    "build:frontend": "npm --prefix Frontend run build",
+    "build:backend": "npm --prefix Backend run build",
+    "start:backend": "npm --prefix Backend run start",
+    "lint:frontend": "npm --prefix Frontend run lint",
+    "lint:backend": "npm --prefix Backend run lint"
+  }
+}
