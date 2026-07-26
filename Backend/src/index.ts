@@ -93,8 +93,10 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-  // Server started
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    // Server started
+  });
+}
 
 export default app;

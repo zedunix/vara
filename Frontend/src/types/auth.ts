@@ -8,6 +8,7 @@ export interface MemberProfile {
   age_category: string;
   blood_group?: string;
   profile_photo?: string;
+  profile_photo_url?: string;
   country?: string;
   emirate?: string;
   area_name?: string;

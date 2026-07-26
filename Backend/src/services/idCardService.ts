@@ -9,7 +9,7 @@
  * ============================================================
  */
 
-import puppeteer, { Browser } from 'puppeteer';
+import type { Browser } from 'puppeteer';
 import fs from 'fs';
 import path from 'path';
 import https from 'https';
@@ -36,20 +36,23 @@ export interface GeneratedCard {
 
 // ── Constants ────────────────────────────────────────────────
 
-const TEMPLATE_PATH = path.join(__dirname, '..', 'templates', 'idcard.html');
+function getPath(subPath: string): string {
+  // Try relative to __dirname first (works in dev and if assets are copied to dist)
+  const relativePath = path.resolve(__dirname, '..', subPath);
+  if (fs.existsSync(relativePath)) {
+    return relativePath;
+  }
+  // Try going up to project root and checking src/ (works in compiled production if assets are not copied to dist)
+  const srcPath = path.resolve(__dirname, '..', '..', 'src', subPath);
+  if (fs.existsSync(srcPath)) {
+    return srcPath;
+  }
+  return relativePath; // fallback
+}
 
-// Resolve asset paths (shared Frontend Images folder)
-const ASSETS_DIR = path.resolve(
-  __dirname,
-  '..',
-  '..',
-  '..',
-  'Frontend',
-  'Images'
-);
-
-const VARA_LOGO_PATH    = path.join(ASSETS_DIR, 'vara-id.png');
-const VARAFIED_BADGE_PATH = path.join(ASSETS_DIR, 'Varafied Icon@4x.png');
+const TEMPLATE_PATH = getPath('templates/idcard.html');
+const VARA_LOGO_PATH = getPath('assets/vara-id.png');
+const VARAFIED_BADGE_PATH = getPath('assets/Varafied Icon@4x.png');
 
 // ── Singleton browser instance ───────────────────────────────
 
@@ -57,19 +60,39 @@ let _browser: Browser | null = null;
 
 async function getBrowser(): Promise<Browser> {
   if (_browser && _browser.connected) return _browser;
-  _browser = await puppeteer.launch({
-    headless: true,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',
-      '--disable-accelerated-2d-canvas',
-      '--no-first-run',
-      '--no-zygote',
-      '--disable-gpu',
-      '--font-render-hinting=none',
-    ],
-  });
+
+  if (process.env.VERCEL) {
+    // Vercel serverless environment
+    const puppeteerCore = await import('puppeteer-core');
+    const chromium = await import('@sparticuz/chromium');
+    
+    const launch = puppeteerCore.default?.launch || puppeteerCore.launch;
+    const chromiumModule = chromium.default || chromium;
+    
+    _browser = await launch({
+      args: chromiumModule.args,
+      defaultViewport: chromiumModule.defaultViewport,
+      executablePath: await chromiumModule.executablePath(),
+      headless: chromiumModule.headless as any,
+    }) as unknown as Browser;
+  } else {
+    // Local development/standard server
+    const puppeteer = await import('puppeteer');
+    const launch = puppeteer.default?.launch || puppeteer.launch;
+    _browser = await launch({
+      headless: true,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-accelerated-2d-canvas',
+        '--no-first-run',
+        '--no-zygote',
+        '--disable-gpu',
+        '--font-render-hinting=none',
+      ],
+    }) as unknown as Browser;
+  }
   return _browser;
 }
 
