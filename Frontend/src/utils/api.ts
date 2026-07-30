@@ -25,9 +25,21 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const requestUrl = error.config?.url || '';
+    const isLoginRequest = requestUrl.includes('/auth/login');
+
+    // A 401 from the login endpoint is an expected invalid-credentials
+    // response. Let the login page display the API message instead of
+    // reloading it. Other 401 responses indicate an expired/invalid session.
+    if (error.response?.status === 401 && !isLoginRequest) {
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      localStorage.removeItem('vara_session');
+      localStorage.removeItem('vara_remember_me');
+      sessionStorage.removeItem('vara_session');
+
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }
